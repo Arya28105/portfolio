@@ -1,14 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arya's Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
-</head>
+    <title>Arya — CSE Student & Java Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a2744;
+            --blue: #2c5282;
+            --accent: #4299e1;
+            --light-blue: #ebf4ff;
+            --white: #ffffff;
+            --gray: #718096;
+            --light-gray: #f7f9fc;
+            --text: #2d3748;
+            --border: #e2e8f0;
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--white);
+            line-height: 1.7;
+        }
+
+        /* ── NAVBAR ── */
+        #navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            background: rgba(26, 39, 68, 0.97);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 60px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo { color: #fff; }
+        .logo-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.02em;
+        }
+        .logo-sub {
+            font-size: 0.72rem;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 36px;
+        }
+        .nav-links li a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            transition: color 0.25s;
+            position: relative;
+        }
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: var(--accent);
+            transition: width 0.25s;
+        }
+        .nav-links li a:hover { color: #fff; }
+        .nav-links li a:hover::after { width: 100%; }
+
+        /* ── HOME ── */
+        #home {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--navy) 0%, #2a4a8a 60%, #1e3a6e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #home::before {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(66,153,225,0.15) 0%, transparent 70%);
+            top: -100px; right: -100px;
+            border-radius: 50%;
+        }
+
+        #home::after {
+            content: '';
+            position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(66,153,225,0.1) 0%, transparent 70%);
+            bottom: -50px; left: -50px;
+            border-radius: 50%;
+        }
+
+        .home-content { position: relative; z-index: 1; max-width: 720px; }
+
+        .home-tag {
+            display: inline-block;
+            background: rgba(66,153,225,0.2);
+            border: 1px solid rgba(66,153,225,0.4);
+            color: var(--accent);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        #home h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            color: #fff;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s 0.1s ease both;
+        }
+
+        #home p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.75);
+            max-width: 580px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+            animation: fadeUp 0.6s 0.2s ease both;
+        }
+
+        .home-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeUp 0.6s 0.3s ease both;
+        }
+
+        .btn-primary {
+            padding: 13px 28px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.25s, transform 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-primary:hover { background: #3182ce; transform: translateY(-2px); }
+
+        .btn-outline {
+            padding: 13px 28px;
+            background: transparent;
+            color: #fff;
+            border: 1.5px solid rgba(255,255,255,0.4);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: border-color 0.25s, background 0.25s, transform 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-outline:hover {
+            border-color: #fff;
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Wave emoji */
+        .wave {
+            display: inline-block;
+            animation: wave 1.8s infinite;
+            transform-origin: 70% 70%;
+        }
+        @keyframes wave {
+            0%   { transform: rotate(0deg); }
+            20%  { transform: rotate(20deg); }
+            40%  { transform: rotate(-10deg); }
+            60%  { transform: rotate(20deg); }
+            80%  { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* ── SECTION COMMON ── */
+        section { padding: 90px 20px; }
+
+        .section-label {
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        section h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        /* ── PROJECTS ── */
+        #projects { background: var(--light-gray); }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            transition: transform 0.25s, box-shadow 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--blue));
+        }
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(26,39,68,0.12);
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--light-blue);
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+
+        .project-card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            color: var(--gray);
+            font-size: 0.92rem;
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+
+        .project-card a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .project-card a:hover { color: var(--accent); }
+        .project-card a::after { content: '→'; }
+
+        /* ── RESUME ── */
+        #resume {
+            background: var(--navy);
+            text-align: center;
+        }
+        #resume h2 { color: #fff; margin-bottom: 16px; }
+        #resume p { color: rgba(255,255,255,0.65); margin-bottom: 36px; font-size: 1rem; max-width: 500px; margin-left: auto; margin-right: auto; margin-bottom: 36px;}
+        .resume-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* ── CONTACT ── */
+        #contact {
+            background: linear-gradient(135deg, var(--navy) 0%, #2a4a8a 100%);
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #contact::before {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(66,153,225,0.12) 0%, transparent 70%);
+            top: -100px; right: -100px;
+            border-radius: 50%;
+        }
+
+        #contact .section-label { color: var(--accent); }
+
+        #contact h2 { color: #fff; }
+
+        .contact-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-tagline {
+            color: rgba(255,255,255,0.65);
+            font-size: 1.05rem;
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 16px 28px;
+            width: 100%;
+            max-width: 420px;
+            text-decoration: none;
+            transition: background 0.25s, transform 0.2s, border-color 0.25s;
+        }
+        .contact-item:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(66,153,225,0.5);
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            font-size: 1.3rem;
+            width: 36px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .contact-info { text-align: left; }
+        .contact-info-label {
+            display: block;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .contact-info-value {
+            display: block;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
 <body>
 
     <!-- NAVBAR -->
@@ -25,77 +416,102 @@
         </ul>
     </nav>
 
-    <!-- H0ME SECTION -->
+    <!-- HOME -->
     <section id="home">
-        <h2>Hello, I'm Arya 👋</h2>
-        <p>
-            I’m a Computer Science student specializing in Java. I enjoy applying programming concepts to build projects
-            and solve problems. I also have exposure to web technologies like HTML, CSS, and JavaScript. My goal is to
-            strengthen my skills in software development and contribute to impactful projects.
-        </p>
-        <div>
-            <a href="#projects"><button>See My Projects</button></a>
-            <a href="Arya Resume.pdf" download><button>Download Resume</button></a>
+        <div class="home-content">
+            <div class="home-tag">Open to Opportunities</div>
+            <h1>Hello, I'm Arya <span class="wave">👋</span></h1>
+            <p>
+                B.Tech CSE student at MMMUT Gorakhpur. I am currently learning Java backend development
+                and have built projects using JDBC, Servlets, JSP and MySQL. I enjoy turning ideas into
+                working applications and am always looking for opportunities to contribute and grow.
+            </p>
+            <div class="home-buttons">
+                <a href="#projects" class="btn-primary">See My Projects</a>
+                <a href="Arya_Resume.pdf" download class="btn-outline">Download Resume</a>
+            </div>
         </div>
     </section>
 
-    <!-- PROJECTS SECTION -->
+    <!-- PROJECTS -->
     <section id="projects">
+        <p class="section-label">What I've Built</p>
         <h2>My Projects</h2>
         <div class="projects-container">
 
-            <!-- Web Calculator -->
             <div class="project-card">
+                <span class="project-tag">Java · JDBC · MySQL</span>
+                <h3>Student Management System</h3>
+                <p>A console-based application to manage student records with full CRUD operations — Add, View, Update, and Delete — using JDBC and MySQL.</p>
+                <a href="https://github.com/Arya28105/Student-Management-System" target="_blank">Source Code</a>
+            </div>
+
+            <div class="project-card">
+                <span class="project-tag">Servlets · JSP · MySQL</span>
+                <h3>Login & Registration System</h3>
+                <p>A web application for user authentication built with Java Servlets, JSP, and JDBC, deployed on Apache Tomcat.</p>
+                <a href="https://github.com/Arya28105/Login-Registration-Servlet" target="_blank">Source Code</a>
+            </div>
+
+            <div class="project-card">
+                <span class="project-tag">Java</span>
+                <h3>Tic Tac Toe</h3>
+                <p>A two-player console-based game in Java with win, draw, and turn detection using core OOP principles.</p>
+                <a href="https://github.com/Arya28105/Tic-Tac-Toe" target="_blank">Source Code</a>
+            </div>
+
+            <div class="project-card">
+                <span class="project-tag">HTML · CSS · JavaScript</span>
                 <h3>Web Calculator</h3>
-                <p>
-                    Built using <strong>HTML, CSS, and JavaScript</strong>.
-                    Users can perform basic arithmetic operations with a clean, responsive interface.
-                </p>
+                <p>A clean, responsive calculator built with HTML, CSS, and JavaScript supporting basic arithmetic operations.</p>
                 <a href="https://github.com/Arya28105/web-calculator" target="_blank">Source Code</a>
             </div>
 
-            <!-- Java Console Calculator -->
             <div class="project-card">
+                <span class="project-tag">Java</span>
                 <h3>Java Console Calculator</h3>
-                <p>
-                    A console-based calculator in <strong>Java</strong> supporting addition, subtraction,
-                    multiplication, and division.
-                </p>
+                <p>A console-based calculator in Java supporting addition, subtraction, multiplication, and division.</p>
                 <a href="https://github.com/Arya28105/console-calculator-java" target="_blank">Source Code</a>
             </div>
 
         </div>
     </section>
 
-    <!-- RESUME SECTION -->
+    <!-- RESUME -->
     <section id="resume">
+        <p class="section-label" style="color: var(--accent);">My Resume</p>
         <h2>Resume</h2>
-        <p>
-            Here's my resume, which includes details about my education, skills, and projects. You can download or view it below. 
-        </p>
-        <div class="resume-container">
-            <a href="Arya Resume.pdf" download> <button>Download Resume</button></a>
-            <a href="Arya Resume.pdf"> <button>View Resume</button></a>
+        <p>Here's my resume with details about my education, skills, and projects.</p>
+        <div class="resume-buttons">
+            <a href="Arya_Resume.pdf" download class="btn-primary">Download Resume</a>
+            <a href="Arya_Resume.pdf" target="_blank" class="btn-outline">View Resume</a>
         </div>
     </section>
 
-    <!-- CONTACT SECTION -->
+    <!-- CONTACT -->
     <section id="contact">
-        <h2>Contact Me</h2>
-        <p>Email: <a href="mailto:arya28102005@gmail.com">arya28102005@gmail.com</a></p>
-        <!-- <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Your Message" required></textarea>
-            <button type="submit">Send</button>
-        </form> -->
+        <div class="contact-wrapper">
+            <p class="section-label">Get In Touch</p>
+            <h2>Contact Me</h2>
+            <p class="contact-tagline">Have an opportunity or just want to say hi? My inbox is always open!</p>
+            <div class="contact-links">
+                <a href="mailto:arya28102005@gmail.com" class="contact-item">
+                    <span class="contact-icon">📧</span>
+                    <div class="contact-info">
+                        <span class="contact-info-label">Email</span>
+                        <span class="contact-info-value">arya28102005@gmail.com</span>
+                    </div>
+                </a>
+                <a href="https://github.com/Arya28105" target="_blank" class="contact-item">
+                    <span class="contact-icon">💻</span>
+                    <div class="contact-info">
+                        <span class="contact-info-label">GitHub</span>
+                        <span class="contact-info-value">github.com/Arya28105</span>
+                    </div>
+                </a>
+            </div>
+        </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2025 Arya’s Portfolio </p>
-    </footer>
-
 </body>
-
 </html>
